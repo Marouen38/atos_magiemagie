@@ -28,7 +28,7 @@ public class Partie implements Serializable {
     private Long id;
     
     @OneToMany(mappedBy = "partie")
-    private List<Joueur> joueur = new ArrayList<>();
+    private List<Joueur> joueurs = new ArrayList<>();
     
     
     @Column(nullable = false)
@@ -66,5 +66,26 @@ public class Partie implements Serializable {
     public String toString() {
         return "magiemagie.Partie[ id=" + id + " ]";
     }
+
+    public List<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public void setJoueurs(List<Joueur> joueurs) {
+        this.joueurs = joueurs;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    
+
+    
+    
     
 }

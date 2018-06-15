@@ -6,6 +6,7 @@
 package atos.magiemagie;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,6 +40,8 @@ public class Carte implements Serializable {
     @JoinColumn
     private Joueur joueur;
     
+    
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeCarte typeCarte;
     

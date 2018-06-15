@@ -26,40 +26,107 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Joueur implements Serializable {
-     public enum EtatJoueur{
-         N_A_PAS_LA_MAIN,
-         A_LA_MAIN,
-         SOMMEIL_PROFOND,
-         PERDU
-     }
+
+    public enum EtatJoueur {
+        N_A_PAS_LA_MAIN,
+        A_LA_MAIN,
+        SOMMEIL_PROFOND,
+        PERDU
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    
-    
+
     @ManyToOne
     @JoinColumn
     private Partie partie;
-    
-    @OneToMany(mappedBy="joueur")
-    List<Carte>cartes=new ArrayList<>();
-      
+
+    @OneToMany(mappedBy = "joueur")
+    List<Carte> cartes = new ArrayList<>();
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EtatJoueur etat;
-    
+
     @Column(unique = true)
     private String pseudo;
-    
+
     private String avatar;
-  
+
     @Column(nullable = false)
     private long nbPartiesJouees;
-    
-     @Column(nullable = false)
+
+    @Column(nullable = false)
     private long nbPartiesGagnees;
+
+    @Column(nullable = false)
+    private long odre;
+
+    public long getOdre() {
+        return odre;
+    }
+
+    public void setOdre(long odre) {
+        this.odre = odre;
+    }
+
+    public Partie getPartie() {
+        return partie;
+    }
+
+    public void setPartie(Partie partie) {
+        this.partie = partie;
+    }
+
+    public List<Carte> getCartes() {
+        return cartes;
+    }
+
+    public void setCartes(List<Carte> cartes) {
+        this.cartes = cartes;
+    }
+
+    public EtatJoueur getEtat() {
+        return etat;
+    }
+
+    public void setEtat(EtatJoueur etat) {
+        this.etat = etat;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public long getNbPartiesJouees() {
+        return nbPartiesJouees;
+    }
+
+    public void setNbPartiesJouees(long nbPartiesJouees) {
+        this.nbPartiesJouees = nbPartiesJouees;
+    }
+
+    public long getNbPartiesGagnees() {
+        return nbPartiesGagnees;
+    }
+
+    public void setNbPartiesGagnees(long nbPartiesGagnees) {
+        this.nbPartiesGagnees = nbPartiesGagnees;
+    }
 
     public Long getId() {
         return id;
@@ -93,5 +160,5 @@ public class Joueur implements Serializable {
     public String toString() {
         return "magiemagie.Joueur[ id=" + id + " ]";
     }
-    
+
 }
