@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package atos.magie.test;
+package atos.magiemagie.test;
 
-import javax.persistence.Persistence;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  *
  * @author Administrateur
  */
-public class NewEmptyJUnitTest {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({atos.magiemagie.test.JoueurServiceTest.class,atos.magiemagie.test.PartieServiceTest.class})
+public class AllTestSuite {
     
-    @Test
-   public void jpaTest(){
-      Persistence.createEntityManagerFactory("PU");
+    public AllTestSuite() {
     }
     
 }

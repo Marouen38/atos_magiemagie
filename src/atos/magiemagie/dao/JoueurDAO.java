@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package atos.magiemagie;
+package atos.magiemagie.dao;
 
+import atos.magiemagie.Joueur;
+import atos.magiemagie.Partie;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -21,6 +23,15 @@ import javax.persistence.Query;
  */
 public class JoueurDAO {
 
+    public Joueur rechercherJOueurOrdre0ParPartieId(long partieId){
+        EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
+        Query query =em.createQuery("SELECT j FROM Joueur j JOIN j.partie p WHERE j.odre = 1 AND p.id=:idParameter");
+        query.setParameter("idParameter",partieId );
+      
+        Joueur joueur = (Joueur) query.getSingleResult();
+        return joueur;
+    }
+    
     public Joueur rechercherParPseudo(String pseudo) {
         EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
         Query query = em.createQuery("SELECT j FROM Joueur j"
@@ -34,7 +45,7 @@ public class JoueurDAO {
         return joueursTrouves.get(0);
     }
 
-    public long rechercheOrdreNouveauJoueurPourPartie(long idPartie) {
+    public long rechercheOrdreNouveauJoueurParPartie(long idPartie) {
         EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
         Query query = em.createQuery("SELECT MAX(j.odre) FROM Joueur j JOIN j.partie p WHERE p.id=:idPartie"
         );
@@ -46,7 +57,7 @@ public class JoueurDAO {
        
     }
 
-    void ajouter(Joueur joueur) {
+    public void ajouter(Joueur joueur) {
         
         EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
         
@@ -55,8 +66,8 @@ public class JoueurDAO {
         em.getTransaction().commit();
     }
 
-    void modifier(Joueur joueur) {
-        EntityManager em=Persistence.createEntityManagerFactory("PU").createEntityManager();
+    public void modifier(Joueur joueur) {
+        EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
         
         em.getTransaction().begin();
         em.merge(joueur);
@@ -66,5 +77,23 @@ public class JoueurDAO {
     
         
     }
+     public Joueur RechercherOrdreJoueur(Long position,Long idPartie){
+        EntityManager em=Persistence.createEntityManagerFactory("PU").createEntityManager();
+        
+       String requete=" SELECT j"
+               + "FROM Joueur j"
+               + "WHERE j.position= :pos"
+               + "      j.partie.id = :part";
+       
+       
+       Query query = em.createNamedQuery(requete);
+        query.setParameter( "pos", position );
+        query.setParameter("part",idPartie);
+        
+        return (Joueur) query.getSingleResult();
+        
+        
+    }
 
+    
 }

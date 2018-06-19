@@ -61,6 +61,24 @@ public class Carte implements Serializable {
         return hash;
     }
 
+    public Joueur getJoueur() {
+        return joueur;
+    }
+
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
+    }
+
+    public TypeCarte getTypeCarte() {
+        return typeCarte;
+    }
+
+    public void setTypeCarte(TypeCarte typeCarte) {
+        this.typeCarte = typeCarte;
+    }
+
+    
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

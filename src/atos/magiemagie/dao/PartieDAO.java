@@ -67,5 +67,23 @@ public class PartieDAO {
         return em.find(Partie.class, idPartie);
     }
           
-  
+    public long ordreSuivant(long idPartie){
+        EntityManager em= Persistence.createEntityManagerFactory("PU").createEntityManager();
+        Query query = em.createQuery("SELECT MAX(j.odre) FROM Joueur j JOIN j.partie p WHERE p.id=:idPartie");
+        query.setParameter("idPartie", idPartie);
+        if(query.getResultList().size() == 0)
+        {
+            return 0;
+        } else {
+            return (long) query.getSingleResult() + 1;
+            //return 1;
+        }
+    }
+    
+    public List<Joueur> listerJoueurs(long idPartie){
+         EntityManager em= Persistence.createEntityManagerFactory("PU").createEntityManager();
+        Query query = em.createQuery("SELECT j FROM Joueur j JOIN j.partie p WHERE p.id=:idPartie");
+        query.setParameter("idPartie", idPartie);
+        return query.getResultList();
+    }
 }
