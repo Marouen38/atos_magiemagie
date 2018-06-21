@@ -28,27 +28,27 @@ public class PartieDAO {
 //    }
     public List<Partie>listerPartieNonDemarees(){
        EntityManager em= Persistence.createEntityManagerFactory("PU").createEntityManager();
-       Query query = em.createQuery("select P "
-               + "FROM Partie P"
-               + "EXEPT"
-               + "SELECT p"
-               + "FROM Partie p"
-               + "JOIN p.joueurs j"
-               + "WHERE j.etat=GAGNE"
-               + "EXEPT"
-               + "SELECT "
-               + "SELECT p"
-               + "FROM Partie p"
-               + "JOIN P.joueurs j "
-               + "WHERE J.etat=:etat_GAGNE"
-               + "EXEPT"
-               + "FROM Partie p"
-               + "JOIN P.joueurs j"
-               + "WHERE j.etat=:etat_alamain" );
+       Query query = em.createQuery("SELECT p "
+               + "FROM Partie p "
+               + "EXCEPT "
+               + "SELECT p "
+               + "FROM Partie p "
+               + "JOIN p.joueurs j "
+               + "WHERE j.etat=:etatGagnee "
+               + "EXCEPT "
+               + "SELECT p "
+               + "FROM Partie p "
+               + "JOIN p.joueurs j "
+               + "WHERE j.etat=:etatGagnee "
+               + "EXCEPT "
+               + "SELECT p "
+               + "FROM Partie p "
+               + "JOIN p.joueurs j "
+               + "WHERE j.etat=:etatALaMain" );
        
        
-       query.setParameter("etat-gagne",Joueur.EtatJoueur.A_LA_MAIN);
-       query.setParameter("etat_a_la_main",Joueur.EtatJoueur.A_LA_MAIN);
+       query.setParameter("etatGagnee",Joueur.EtatJoueur.GAGNE);
+       query.setParameter("etatALaMain",Joueur.EtatJoueur.A_LA_MAIN);
         return query.getResultList();
       
     }
@@ -86,4 +86,17 @@ public class PartieDAO {
         query.setParameter("idPartie", idPartie);
         return query.getResultList();
     }
+
+    public boolean determineSiPlusQueUnJoueurDansPartie(long partieId) {
+         EntityManager em= Persistence.createEntityManagerFactory("PU").createEntityManager();
+         Query query = em.createQuery("SELECT COUNT(j) FROM Joueur j JOIN j.partie p WHERE p.id=:idPartie AND j.etat !=:etat1");
+         query.setParameter("idPartie", partieId);
+         query.setParameter("etat1", Joueur.EtatJoueur.PERDU);
+         if((long)query.getSingleResult()==1L){
+             return true;
+             
+         }
+         return false;
+    }
+    
 }

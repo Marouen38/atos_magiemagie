@@ -68,15 +68,22 @@ public class JoueurService {
         
         //donner 7 cartes au hazard a chaque joueur
         for(Joueur jboucle:daopartie.listerJoueurs(idPartie)){
-            for(int i=0;i<=7;i++){
+            for(int i=0;i<7;i++){
                  ajouterCarte(jboucle, randomCarte());
             }
            
         }
         
     }
+    public void piocherCarte(long idJoueur){
+        ajouterCarte(daojoueur.rechercherParID(idJoueur), randomCarte());
+        
+    }
     
-  
+    public boolean joueurALesCartes(long idJoueur , Carte.TypeCarte type1, Carte.TypeCarte type2){
+        return daocarte.joueurAlesCartes(idJoueur, type1, type2);
+    }
+    
     private Carte randomCarte() {
         
         Carte.TypeCarte[] tabTypesCartes = Carte.TypeCarte.values();
@@ -98,5 +105,8 @@ public class JoueurService {
         
         
 
+    }
+    public Joueur joueurQuiALaMain(long idPartie){
+        return daojoueur.recupereJoueurALaMAin(idPartie);
     }
 }

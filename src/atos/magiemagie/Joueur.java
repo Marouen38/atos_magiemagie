@@ -31,7 +31,8 @@ public class Joueur implements Serializable {
         N_A_PAS_LA_MAIN,
         A_LA_MAIN,
         SOMMEIL_PROFOND,
-        PERDU
+        PERDU,
+        GAGNE
     }
 
     private static final long serialVersionUID = 1L;
